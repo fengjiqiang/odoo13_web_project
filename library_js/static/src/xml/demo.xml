@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<template id="template_01" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+            <t t-if="widget.displayName=='借阅'">
+                <button class="btn btn-primary create_by_dept" type="button">Unknow</button>
+            </t>
+        </t>
+    </t>
+</template>
