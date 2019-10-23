@@ -18,45 +18,43 @@
         <field name="model">training.book</field>
         <field name="arch" type="xml">
             <form string="">
-                <sheet>
+                <group>
                     <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="author" domain="[('op_type', '=', 'author')]"/>
-                        </group>
-                        <group>
-                            <field name="year"/>
-                            <field name="ISBN"/>
-                        </group>
+                        <field name="name"/>
+                        <field name="author" domain="[('op_type', '=', 'author')]"/>
                     </group>
-                    <notebook name="notebook_copy">
-                        <page name="copy_info" string="副本信息">
-                            <field name="book_copy_ids">
-                                <tree string="" editable="top" multi_edit="1">
-                                    <field name="is_chose" string=" " widget="checkbox"/>
-                                    <field name="book_id" domain="[('name', '=', parent.name)]"/>
-                                    <field name="name"/>
-                                    <field name="reference"/>
-                                    <field name="book_location"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook name="notebook_rent_book">
-                        <page name="rent_book_info" string="借阅信息">
-                            <field name="rent_ids">
-                                <tree string="" editable="top">
-                                    <field name="copy_id" domain="[('book_rented', '=', False)]"/>
-                                    <field name="book_reference"/>
-                                    <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
-                                    <field name="rental_date"/>
-                                    <field name="return_date" readonly="1"/>
-                                    <field name="continue_days" readonly="1"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
+                    <group>
+                        <field name="year"/>
+                        <field name="ISBN"/>
+                    </group>
+                </group>
+                <!-- <notebook name="notebook_copy">
+                    <page name="copy_info" string="副本信息"> -->
+                <field name="book_copy_ids">
+                    <tree string="" editable="top" multi_edit="1">
+                        <field name="is_chose" string=" " widget="checkbox"/>
+                        <field name="book_id" domain="[('name', '=', parent.name)]"/>
+                        <field name="name"/>
+                        <field name="reference"/>
+                        <field name="book_location"/>
+                    </tree>
+                </field>
+                    <!-- </page>
+                </notebook>
+                <notebook name="notebook_rent_book">
+                    <page name="rent_book_info" string="借阅信息"> -->
+                <field name="rent_ids">
+                    <tree string="" editable="top">
+                        <field name="copy_id" domain="[('book_rented', '=', False)]"/>
+                        <field name="book_reference"/>
+                        <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
+                        <field name="rental_date"/>
+                        <field name="return_date" readonly="1"/>
+                        <field name="continue_days" readonly="1"/>
+                    </tree>
+                </field>
+                    <!-- </page>
+                </notebook> -->
             </form>
         </field>
     </record>

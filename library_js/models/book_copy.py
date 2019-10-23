@@ -8,7 +8,7 @@ class BookCopy(models.Model):
     _description = "书籍副本"
     # _inherits = {'training.book': 'book_id'}
 
-    book_id = fields.Many2one('training.book', string="书籍", delegate=True, ondelete='cascade')
+    book_id = fields.Many2one('training.book', string="书籍", ondelete='cascade')
     name = fields.Char(string="副本名称", default=lambda self: _('New'), readonly=True, required=True)
     reference = fields.Char(string="副本编号", default=lambda self: _('New'), readonly=True, required=True)
     book_rent_ids = fields.One2many('book.rent.return', 'copy_id', string="借阅")
@@ -16,6 +16,7 @@ class BookCopy(models.Model):
     partner_book_ids = fields.Many2many("training.customer")
     book_location = fields.Char(string="馆藏位置")
     is_chose = fields.Boolean(default=False)
+
 
     # 重写create方法，next_by_code方法指定模型：
     @api.model
