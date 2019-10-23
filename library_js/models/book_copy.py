@@ -14,6 +14,8 @@ class BookCopy(models.Model):
     book_rent_ids = fields.One2many('book.rent.return', 'copy_id', string="借阅")
     book_rented = fields.Boolean(string="借出", default=False)
     partner_book_ids = fields.Many2many("training.customer")
+    book_location = fields.Char(string="馆藏位置")
+    is_chose = fields.Boolean(default=False)
 
     # 重写create方法，next_by_code方法指定模型：
     @api.model
@@ -29,7 +31,7 @@ class BookCopy(models.Model):
     ]
 
     @api.model
-    def write_cus(self, resid):
+    def write_customer_info(self, resid):
         # 借阅记录id
         rent_book_id = self.env['book.rent.return'].search([('id', '=', resid)])
         # 副本id

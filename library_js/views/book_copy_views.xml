@@ -11,6 +11,7 @@
                 <field name="name"/>
                 <field name="reference"/>
                 <field name="book_rented" widget="boolean_toggle"/>
+                <field name="book_location"/>
             </xpath>
             <field name="name" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -28,6 +29,7 @@
                 <field name="book_id" required="1"/>
                 <field name="name"/>
                 <field name="reference"/>
+                <field name="book_location"/>
             </xpath>
             <xpath expr="//field[@name='ISBN']" position="after">
                 <field name="author" position="move"/>

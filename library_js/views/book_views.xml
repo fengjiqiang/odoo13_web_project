@@ -4,7 +4,7 @@
         <field name="name">training.book.tree</field>
         <field name="model">training.book</field>
         <field name="arch" type="xml">
-            <tree string="">
+            <tree string="" multi_edit="1">
                 <field name="name"/>
                 <field name="author"/>
                 <field name="year"/>
@@ -18,8 +18,6 @@
         <field name="model">training.book</field>
         <field name="arch" type="xml">
             <form string="">
-                <header>
-                </header>
                 <sheet>
                     <group>
                         <group>
@@ -34,12 +32,12 @@
                     <notebook name="notebook_copy">
                         <page name="copy_info" string="副本信息">
                             <field name="book_copy_ids">
-                                <tree string="" editable="top">
+                                <tree string="" editable="top" multi_edit="1">
+                                    <field name="is_chose" string=" " widget="checkbox"/>
                                     <field name="book_id" domain="[('name', '=', parent.name)]"/>
                                     <field name="name"/>
                                     <field name="reference"/>
-                                    <field name="author"/>
-                                    <field name="ISBN"/>
+                                    <field name="book_location"/>
                                 </tree>
                             </field>
                         </page>
