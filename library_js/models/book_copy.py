@@ -15,7 +15,7 @@ class BookCopy(models.Model):
     book_rented = fields.Boolean(string="借出", default=False)
     partner_book_ids = fields.Many2many("training.customer")
     book_location = fields.Char(string="馆藏位置")
-    is_chose = fields.Boolean(default=False)
+    # is_chose = fields.Boolean(default=False)
 
 
     # 重写create方法，next_by_code方法指定模型：

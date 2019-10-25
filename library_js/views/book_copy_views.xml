@@ -19,36 +19,37 @@
         <field name="model">training.book.copy</field>
         <field name="arch" type="xml">
             <form string="">
-                <group>
+                <sheet>
                     <group>
-                        <field name="book_id"/>
-                        <field name="name"/>
-                        <field name="reference"/>
+                        <group>
+                            <field name="book_id"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="book_location"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="book_rented" widget="boolean_toggle"/>
-                        <field name="book_location"/>
-                    </group>
-                </group>
-                
-                <field name="book_rent_ids">
-                    <tree string="" editable="top">
-                        <field name="copy_id" domain="[('book_rented', '=', False)]"/>
-                        <field name="book_reference"/>
-                        <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
-                        <field name="rental_date"/>
-                        <field name="return_date" readonly="1"/>
-                        <field name="continue_days" readonly="1"/>
-                    </tree>
-                </field>
                     
-                <field name="partner_book_ids">
-                    <tree string="" editable="bottom">
-                        <field name="name"/>
-                        <field name="op_type"/>
-                        <field name="money" attrs="{'invisible': [('op_type', '!=', 'partner')]}"/>
-                    </tree>
-                </field>
+                    <field name="book_rent_ids">
+                        <tree string="" editable="top">
+                            <field name="copy_id" domain="[('book_rented', '=', False)]"/>
+                            <field name="book_reference"/>
+                            <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
+                            <field name="rental_date"/>
+                            <field name="return_date" readonly="1"/>
+                            <field name="continue_days" readonly="1"/>
+                        </tree>
+                    </field>
+                        
+                    <field name="partner_book_ids">
+                        <tree string="" editable="bottom">
+                            <field name="name"/>
+                            <field name="op_type"/>
+                            <field name="money" attrs="{'invisible': [('op_type', '!=', 'partner')]}"/>
+                        </tree>
+                    </field>
+                </sheet>
             </form>
         </field>
     </record>

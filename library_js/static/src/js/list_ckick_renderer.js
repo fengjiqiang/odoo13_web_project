@@ -3,9 +3,19 @@ odoo.define('ListClickRenderer', function (require) {
 
     var ListRenderer = require('web.ListRenderer');
     var ListController = require('web.ListController');
+    var FormRender = require('web.FormRenderer');
+    var session = require('web.session');
 
     var renderer;
     var controller;
+    var last_target_id = null;
+
+    FormRender.include({
+        _renderView: function () {
+            controller = this;
+            return this._super.apply(this, arguments);
+        }
+    })
 
     // ListController.include({
     //     renderPager: function(){
@@ -15,6 +25,15 @@ odoo.define('ListClickRenderer', function (require) {
     // });
 
     ListRenderer.include({
+        // 复选框尝试失败
+        // events: {
+        //     'change tbody .o_data_cell o_field_cell o_checkbox_cell': '_onChooseRecord',
+        // },
+        // _onChooseRecord: function (ev) {
+        //     ev.stopPropagation();
+        //     this._updateSelection();
+        // },
+
         _onRowClicked: function (event) {
             var model_list = ["training.book.copy", "training.book"]
             var name_list = ["book_rent_ids", "book_copy_ids"]
@@ -26,7 +45,34 @@ odoo.define('ListClickRenderer', function (require) {
             //         this._super.apply(this, arguments);
             //     }
             // }
-            if (!this._isRecordEditable(event.currentTarget.dataset.id) && this.viewType == 'list') {
+            var self = this;
+            var id = $(event.currentTarget).data('id');
+            // var resid = this._getRecord(id).data.id;
+            for (let i = 0; i < self.state.data.length; i++) {
+                if (self.state.data[i].id == id) {
+                    resid = self.state.data[i].data.id;
+                }
+            }
+
+            if (controller && controller.mode == 'edit') {
+                if (self.state.data[0].model == 'training.book.copy') {
+                    if (last_target_id == resid) {
+                        return;
+                    } else {
+                        if (last_target_id) {
+                            alert("记录已被修改，请保存继续！")
+                        }
+                        last_target_id = resid;
+                    }
+                }
+                if (self.state.data[0].model == 'book.rent.return') {
+                    this._super.apply(this, arguments);
+                    return;
+                }
+            }
+
+
+            if (this.viewType == 'list') {
                 if(model_list.indexOf(this.__parentedParent.model)==-1 && name_list.indexOf(this.__parentedParent.name)==-1){
                     this._super.apply(this, arguments);
                     return;
@@ -37,23 +83,35 @@ odoo.define('ListClickRenderer', function (require) {
                 var resid;
                 if (id) {
                     // 获取记录id
-                    for (let i = 0; i < self.state.data.length; i++) {
-                        if (self.state.data[i].id == id) {
-                            resid = self.state.data[i].data.id;
-                        }
-                    }
-                    // this.trigger_up('open_record', { id: id, target: event.target});
-                    // var record = controller.model.get(id, {raw: true});
+                    // for (let i = 0; i < self.state.data.length; i++) {
+                    //     if (self.state.data[i].id == id) {
+                    //         resid = self.state.data[i].data.id;
+                    //     }
+                    // }
+                    // 方法二获取记录id
+                    var record = self._getRecord(id);
+                    resid = record.data.id;
                 }
-                // id = record.data.id;
                 this._rpc({
                     // model: this.state.model,   // 当前模型名称
                     model: 'training.book',
                     method: 'write_rent_record',
                     args: [resid],
-                }).then(function () {
+                }).then(function (res) {
+                    // 方式一reload
                     self.trigger_up('reload');
+                    // 方式二switch_view,效果同方式一
+                    // self.trigger_up('switch_view', {
+                    //     view_type: 'form',
+                    //     // res_id: resid,
+                    //     // mode: 'edit',
+                    //     // model: 'training.book',
+                    //     // target: 'self',
+                    // })
                 });
+                // }).then(function () {
+                //     self._super.apply(self, arguments);
+                // });
 
                 // this._rpc({
                 //     // model: this.state.model,   // 当前模型名称
@@ -62,11 +120,11 @@ odoo.define('ListClickRenderer', function (require) {
                 //     args: [resid],
                 //     // kwargs: {id: resid}
                 // }).then(function () {
-                //     // self.trigger_up('reload');
+                //     self.trigger_up('reload');
                 // });
 
 
-                // this.state.data[0].data.ISBN="56768";
+                // this.state.data[0].data.book_location="馆A-1-1";
                 // // renderview
                 // var self = this;
                 // this.$el
