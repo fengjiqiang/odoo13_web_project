@@ -36,7 +36,7 @@
                             <field name="book_id" domain="[('name', '=', parent.name)]"/>
                             <field name="name"/>
                             <field name="reference"/>
-                            <field name="book_location" required="1"/>
+                            <field name="book_location"/>
                         </tree>
                     </field>
                     
