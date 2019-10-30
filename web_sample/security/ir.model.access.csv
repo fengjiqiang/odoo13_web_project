@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_category_user,product.category.user,model_web_product_category,base.group_user,1,1,1,1
+access_product_user,product.user,model_web_product,base.group_user,1,1,1,1
+access_customer_user,customer.user,model_web_customer,base.group_user,1,1,1,1
+access_purchase_order_user,purchase.order.user,model_web_purchase_order,base.group_user,1,1,1,1
+access_purchase_order_line_user,purchase.order.line.user,model_web_purchase_order_line,base.group_user,1,1,1,1

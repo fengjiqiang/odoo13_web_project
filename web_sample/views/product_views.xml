@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="web_product_tree_view" model="ir.ui.view">
+        <field name="name">web.product.tree</field>
+        <field name="model">web.product</field>
+        <field name="arch" type="xml">
+            <tree string="Product" multi_edit="1">
+                <field name="sequence" widget="handle" readonly="1"/>
+                <field name="name"/>
+                <field name="categ_id" optional="show"/>
+                <field name="list_price" string="Sales Price" optional="show"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="web_product_form_view" model="ir.ui.view">
+        <field name="name">web.product.form</field>
+        <field name="model">web.product</field>
+        <field name="arch" type="xml">
+            <form string="Product">
+                <sheet>
+                    <widget name="web_ribbon" text="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="categ_id"/>
+                            <field name="list_price"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- search panel -->
+    <record id="web_product_search_view" model="ir.ui.view">
+        <field name="name">web.product.search</field>
+        <field name="model">web.product</field>
+        <field name="arch" type="xml">
+            <search string="Products">
+                <searchpanel>
+                    <field name="categ_id" icon="fa-users"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="web_product_action" model="ir.actions.act_window">
+        <field name="name">Web Products</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">web.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="web_product_tree_view"/>
+    </record>
+</odoo>

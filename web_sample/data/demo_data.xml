@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <!-- Data to load -->
+    <!-- Product Category 一级 -->
+    <record model="web.product.category" id="category_root">
+        <field name="name">All</field>
+    </record>
+    <!-- 二级 -->
+    <record model="web.product.category" id="category_chinese">
+        <field name="name">中餐</field>
+        <field name="parent_id" ref="category_root"/>
+    </record>
+    <record model="web.product.category" id="category_japanese">
+        <field name="name">日本料理</field>
+        <field name="parent_id" ref="category_root"/>
+    </record>
+    <!-- 三级 -->
+    <record model="web.product.category" id="category_1">
+        <field name="name">川菜</field>
+        <field name="parent_id" ref="category_chinese"/>
+    </record>
+    <record model="web.product.category" id="category_2">
+        <field name="name">鲁菜</field>
+        <field name="parent_id" ref="category_chinese"/>
+    </record>
+    <!-- Product -->
+    <record model="web.product" id="product_1">
+        <field name="name">夫妻肺片</field>
+        <field name="categ_id" ref="category_1"/>
+        <field name="list_price">45</field>
+    </record>
+    <record model="web.product" id="product_2">
+        <field name="name">鱼香肉丝</field>
+        <field name="categ_id" ref="category_1"/>
+        <field name="list_price">35</field>
+    </record>
+    <record model="web.product" id="product_3">
+        <field name="name">四川火锅</field>
+        <field name="categ_id" ref="category_1"/>
+        <field name="list_price">888</field>
+    </record>
+    <record model="web.product" id="product_4">
+        <field name="name">枣庄辣子鸡</field>
+        <field name="categ_id" ref="category_2"/>
+        <field name="list_price">68</field>
+    </record>
+    <record model="web.product" id="product_5">
+        <field name="name">糖醋黄河鲤鱼</field>
+        <field name="categ_id" ref="category_2"/>
+        <field name="list_price">88</field>
+    </record>
+    <record model="web.product" id="product_6">
+        <field name="name">九转大肠</field>
+        <field name="categ_id" ref="category_2"/>
+        <field name="list_price">58</field>
+    </record>
+    <!-- Customer -->
+    <record model="web.customer" id="customer_1">
+        <field name="name">zhangsan</field>
+        <field name="phone">123456789</field>
+        <field name="email">zhangsan@test.com</field>
+    </record>
+    <record model="web.customer" id="customer_2">
+        <field name="name">liuyi</field>
+        <field name="phone">987654321</field>
+        <field name="email">liuyi@test.com</field>
+    </record>
+    <record model="web.customer" id="customer_3">
+        <field name="name">yitian</field>
+        <field name="phone">213456789</field>
+        <field name="email">yitian@test.com</field>
+    </record>
+    <!-- Purchase Order -->
+    <record id="purchase_order_1" model="web.purchase.order">
+        <field name="name">订单1</field>
+        <field name="customer_id" ref="customer_1"/>
+        <field name="date_order">2019-10-29 17:21:33</field>
+        <field name="order_line" model="web.purchase.order.line" eval="[(5, 0, 0),
+            (0, 0, {
+                'product_id': ref('product_4'),
+                'price_unit': 68.00,
+                'product_qty': 15.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_1'),
+                'price_unit': 45.00,
+                'product_qty': 5.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_3'),
+                'price_unit': 888.00,
+                'product_qty': 4.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)})
+        ]"/>
+    </record>
+    <record id="purchase_order_2" model="web.purchase.order">
+        <field name="name">订单2</field>
+        <field name="customer_id" ref="customer_2"/>
+        <field name="date_order">2019-10-29 18:21:33</field>
+        <field name="order_line" model="web.purchase.order.line" eval="[(5, 0, 0),
+            (0, 0, {
+                'product_id': ref('product_2'),
+                'price_unit': 35.00,
+                'product_qty': 15.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_5'),
+                'price_unit': 88.00,
+                'product_qty': 5.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_3'),
+                'price_unit': 888.00,
+                'product_qty': 4.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)})
+        ]"/>
+    </record>
+    <record id="purchase_order_3" model="web.purchase.order">
+        <field name="name">订单3</field>
+        <field name="customer_id" ref="customer_3"/>
+        <field name="date_order">2019-10-29 19:21:33</field>
+        <field name="order_line" model="web.purchase.order.line" eval="[(5, 0, 0),
+            (0, 0, {
+                'product_id': ref('product_6'),
+                'price_unit': 58.00,
+                'product_qty': 15.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_1'),
+                'price_unit': 45.00,
+                'product_qty': 5.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)}),
+            (0, 0, {
+                'product_id': ref('product_3'),
+                'price_unit': 888.00,
+                'product_qty': 4.0,
+                'date_planned': DateTime.today() + relativedelta(days=3)})
+        ]"/>
+    </record>
+</odoo>

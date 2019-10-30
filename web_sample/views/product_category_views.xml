@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="web_product_category_form_view" model="ir.ui.view">
+            <field name="name">web.product.category.form</field>
+            <field name="model">web.product.category</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Category name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group name="first" col="2">
+                            <field name="parent_id" class="oe_inline"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="web_product_category_list_view" model="ir.ui.view">
+            <field name="name">web.product.category.list</field>
+            <field name="model">web.product.category</field>
+            <field name="arch" type="xml">
+                <tree string="Product Categories">
+                    <field name="display_name" string="Product Category"/>
+                </tree>
+            </field>
+        </record>
+        <record id="web_product_category_action" model="ir.actions.act_window">
+            <field name="name">Web Product Categories</field>
+            <field name="res_model">web.product.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

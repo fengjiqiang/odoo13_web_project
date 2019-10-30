@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="web_presentation_root_menu" 
+              name="web_presentation"
+              web_icon ="web_sample,static/description/icon.png"
+              sequence="10" />
+    <menuitem id="web_presentation_menu" 
+              name="view and widget"
+              parent="web_presentation_root_menu"
+              sequence="10" />
+    <menuitem id="web_product_category_menu" 
+              name="product category"
+              parent="web_presentation_menu"
+              action="web_product_category_action"
+              sequence="30"/>
+    <menuitem id="web_product_menu" 
+              name="product"
+              parent="web_presentation_menu"
+              action="web_product_action"
+              sequence="20"/>
+    <menuitem id="web_purchase_order_menu"
+              name="order"
+              parent="web_presentation_menu"
+              action="web_purchase_order_action"
+              sequence="10"/>
+    <menuitem id="web_customer_menu" 
+              name="customer" 
+              parent="web_presentation_menu" 
+              action="web_customer_view_action" 
+              sequence="40"/>
+</odoo>
