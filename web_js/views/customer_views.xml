@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="view_training_customer_tree" model="ir.ui.view">
         <field name="name">training.customer.tree</field>
@@ -7,7 +7,8 @@
             <tree string="">
                 <field name="name"/>
                 <field name="op_type"/>
-                <field name="money" attrs="{'invisible': [('op_type', '!=', 'partner')]}"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="money" widget="monetary" attrs="{'invisible': [('op_type', '!=', 'partner')]}"/>
             </tree>
         </field>
     </record>

@@ -12,6 +12,7 @@
     'data': [
         'static/src/xml/list_template.xml',
         'security/ir.model.access.csv',
+        'data/demo_data.xml',
         'views/book_views.xml',
         'views/book_copy_views.xml',
         'views/book_rent_return_views.xml',

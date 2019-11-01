@@ -3,34 +3,34 @@
 
     <!--一级菜单-->
     <menuitem name="图书馆"
-              id="library_js.menu_root"
-              web_icon="library_js,static/description/icon.png"
+              id="menu_root"
+              web_icon="web.js,static/description/icon.png"
               sequence="0"/>
     <!--二级菜单-->
     <menuitem name="书籍"
-              id="library_js.menu_book"
-              parent="library_js.menu_root"
+              id="menu_book"
+              parent="menu_root"
               action="action_book_add"
               sequence="10"/>
     <menuitem name="借阅"
-              id="library_js.menu_book_rent_return"
-              parent="library_js.menu_root"
+              id="menu_book_rent_return"
+              parent="menu_root"
               action="action_book_rent_return"
               sequence="20"/>
     <menuitem name="人员"
-              id="library_js.menu_customer"
-              parent="library_js.menu_root"
+              id="menu_customer"
+              parent="menu_root"
               action="action_customer_add"
               sequence="30"/>
     <!--三级菜单-->
     <menuitem name="书籍"
-              id="library_js.menu_book_book"
-              parent="library_js.menu_book"
+              id="menu_book_book"
+              parent="menu_book"
               action="action_book_add"
               sequence="10"/>
     <menuitem name="副本"
-              id="library_js.menu_book_copy"
-              parent="library_js.menu_book"
+              id="menu_book_copy"
+              parent="menu_book"
               action="action_book_copy_add"
               sequence="20"/>
 
