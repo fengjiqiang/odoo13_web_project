@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="view_training_book_tree" model="ir.ui.view">
         <field name="name">training.book.tree</field>
@@ -36,10 +36,13 @@
                             <field name="name"/>
                             <field name="reference"/>
                             <field name="book_location"/>
+                            <field name="book_rent_ids">
+                            </field>
                         </tree>
                     </field>
                     
-                    <field name="rent_ids">
+                    
+                    <!-- <field name="rent_ids">
                         <tree string="" editable="top">
                             <field name="copy_id" domain="[('book_rented', '=', False)]"/>
                             <field name="book_reference"/>
@@ -48,14 +51,14 @@
                             <field name="return_date" readonly="1"/>
                             <field name="continue_days" readonly="1"/>
                         </tree>
-                    </field>
+                    </field> -->
                 </sheet>
             </form>
         </field>
     </record>
 
     <record id="action_book_add" model="ir.actions.act_window">
-        <field name="name">添加书籍</field>
+        <field name="name">书籍</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">training.book</field>
         <field name="view_id" ref="view_training_book_tree"/>

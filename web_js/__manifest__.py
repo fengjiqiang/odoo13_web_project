@@ -10,7 +10,7 @@
     'depends': ['base', 'mail'],
     # 菜单放在最后面
     'data': [
-        'views/list_template.xml',
+        'static/src/xml/list_template.xml',
         'security/ir.model.access.csv',
         'views/book_views.xml',
         'views/book_copy_views.xml',
