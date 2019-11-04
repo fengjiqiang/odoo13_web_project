@@ -130,7 +130,7 @@
     </record>
     <record model="book.rent.return" id="rent_5">
         <field name="copy_id" ref="copy_5"/>
-        <field name="customer_id" ref="customer_2"/>
+        <field name="customer_id" ref="customer_4"/>
         <field name="state">confirm</field>
     </record>
     <record model="book.rent.return" id="rent_6">

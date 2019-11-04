@@ -37,11 +37,11 @@
                             <field name="name"/>
                             <field name="reference"/>
                             <field name="book_location"/>
-                            <!-- <field name="book_rent_ids" widget="many2many_tags"/> -->
+                            <field name="book_rent_ids" widget="many2many_tags"/>
                         </tree>
                     </field>
                     
-                    <field name="rent_ids">
+                    <!-- <field name="rent_ids">
                         <tree string="" editable="top">
                             <field name="copy_id" domain="[('book_rented', '=', False)]"/>
                             <field name="book_reference"/>
@@ -50,7 +50,7 @@
                             <field name="return_date" readonly="1"/>
                             <field name="continue_days" readonly="1"/>
                         </tree>
-                    </field>
+                    </field> -->
                 </sheet>
             </form>
         </field>

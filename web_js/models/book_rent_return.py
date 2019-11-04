@@ -47,3 +47,8 @@ class BookSentReturn(models.Model):
             self.write({'return_date': current})
             self.write({'continue_days': str(current - self.rental_date)})
             self.copy_id.write({'book_rented': False})
+    
+    @api.model
+    def search_read(self,domain=None, fields=None, offset=0, limit=None, order=None):
+        res = super(BookSentReturn,self).search_read(domain,fields,offset,limit,order)
+        return res
