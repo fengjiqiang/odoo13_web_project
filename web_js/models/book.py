@@ -13,15 +13,15 @@ class Book(models.Model):
     year = fields.Date(string='出版时间')
     ISBN = fields.Char(string='ISBN号')
     book_copy_ids = fields.One2many('training.book.copy', 'book_id', string="副本")
-    rent_ids = fields.One2many('book.rent.return', 'rent_book_id')
+    # rent_ids = fields.One2many('book.rent.return', 'rent_book_id')
 
-    @api.model
-    def write_rent_record(self, resid):
-        # 副本id
-        book_copy_id = self.env['training.book.copy'].search([('id', '=', resid)])
-        # 书籍id
-        book_id = book_copy_id.book_id
-        # 借阅id
-        rent_book_id = book_copy_id.book_rent_ids.ids
-        # 写入表中
-        book_id.write({'rent_ids': [(6, 0, rent_book_id)]})
+    # @api.model
+    # def write_rent_record(self, resid):
+    #     # 副本id
+    #     book_copy_id = self.env['training.book.copy'].search([('id', '=', resid)])
+    #     # 书籍id
+    #     book_id = book_copy_id.book_id
+    #     # 借阅id
+    #     rent_book_id = book_copy_id.book_rent_ids.ids
+    #     # 写入表中
+    #     book_id.write({'rent_ids': [(6, 0, rent_book_id)]})

@@ -84,12 +84,12 @@ ListRenderer.include({
                                         <table style='table-layout: fixed;'>\
                                         <thead>\
                                         <tr>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>书籍</span></th>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>编号</span></th>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>借阅人</span></th>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>借阅时间</span></th>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>归还时间</span></th>\
-                                        <th tabindex='-1' class='o_column_sortable' data-original-title='' title='' style='width: 487px;'><span class='o_resize'>持续时间</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>书籍</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>编号</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>借阅人</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>借阅时间</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>归还时间</span></th>\
+                                        <th tabindex='-1' style='width: 487px;'><span>持续时间</span></th>\
                                         </tr>\
                                         </thead>\
                                         <tbody class='new_table'>\

@@ -23,7 +23,7 @@ class BookSentReturn(models.Model):
         ('complete', '完成'),
     ], string='状态', copy=False, default='draft')
     book_rented = fields.Boolean(string="借出", default=False)
-    rent_book_id = fields.Many2one('training.book')
+    # rent_book_id = fields.Many2one('training.book')
 
 
     def action_confirm(self):
