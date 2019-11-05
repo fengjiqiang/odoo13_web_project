@@ -78,54 +78,56 @@ ListRenderer.include({
         // } else {
         //     this._super.apply(this, arguments);
         // }
+
         if (self.state.data[0].model === 'training.book.copy') {
             if ($('.o_field_one2many_new').length === 0) {
                 $('.clearfix').append("<div class='o_field_one2many_new'>\
-                                        <table style='table-layout: fixed;'>\
-                                        <thead>\
-                                        <tr>\
-                                        <th tabindex='-1' style='width: 487px;'><span>书籍</span></th>\
-                                        <th tabindex='-1' style='width: 487px;'><span>编号</span></th>\
-                                        <th tabindex='-1' style='width: 487px;'><span>借阅人</span></th>\
-                                        <th tabindex='-1' style='width: 487px;'><span>借阅时间</span></th>\
-                                        <th tabindex='-1' style='width: 487px;'><span>归还时间</span></th>\
-                                        <th tabindex='-1' style='width: 487px;'><span>持续时间</span></th>\
-                                        </tr>\
-                                        </thead>\
-                                        <tbody class='new_table'>\
-                                        </tbody>\
-                                        </table>\
-                                        </div>");
+                                    <table style='table-layout: fixed;'>\
+                                    <thead>\
+                                    <tr>\
+                                    <th tabindex='-1' style='width: 487px;'><span>书籍</span></th>\
+                                    <th tabindex='-1' style='width: 487px;'><span>编号</span></th>\
+                                    <th tabindex='-1' style='width: 487px;'><span>借阅人</span></th>\
+                                    <th tabindex='-1' style='width: 487px;'><span>借阅时间</span></th>\
+                                    <th tabindex='-1' style='width: 487px;'><span>归还时间</span></th>\
+                                    <th tabindex='-1' style='width: 487px;'><span>持续时间</span></th>\
+                                    </tr>\
+                                    </thead>\
+                                    <tbody class='new_table'>\
+                                    </tbody>\
+                                    </table>\
+                                    </div>");
             }
             self._rpc({
-                model:'book.rent.return',
-                method:'search_read',
-                args:[],
-                kwargs:{
-                    fields:['copy_id','book_reference','customer_id','rental_date','return_date','continue_days'],
-                    domain:[['copy_id','=',resid]]
-                }   
-            }).then(function(res){
+                model: 'book.rent.return',
+                method: 'search_read',
+                args: [],
+                kwargs: {
+                    fields: ['copy_id', 'book_reference', 'customer_id', 'rental_date', 'return_date', 'continue_days'],
+                    domain: [['copy_id', '=', resid]]
+                }
+            }).then(function (res) {
                 // console.log(res);
                 $('.new_table').empty();
-                for (let i=0; i<res.length; i++) {
+                for (let i = 0; i < res.length; i++) {
                     var data = res[i];
                     console.log(data);
                     $('.new_table').append("<tr>\
-                                            <td>"+ data.copy_id[1] +"</td>\
-                                            <td>"+ data.book_reference +"</td>\
-                                            <td>"+ data.customer_id[1] +"</td>\
-                                            <td>"+ data.rental_date +"</td>\
-                                            <td>"+ self.is_false(data.return_date) +"</td>\
-                                            <td>"+ self.is_false(data.continue_days) +"</td>\
-                                            </tr>\
-                    ")
+                                        <td>"+ data.copy_id[1] + "</td>\
+                                        <td>"+ data.book_reference + "</td>\
+                                        <td>"+ data.customer_id[1] + "</td>\
+                                        <td>"+ data.rental_date + "</td>\
+                                        <td>"+ self.is_false(data.return_date) + "</td>\
+                                        <td>"+ self.is_false(data.continue_days) + "</td>\
+                                        </tr>\
+                ")
                 }
-            })
+            });
         } else {
             this._super.apply(this, arguments);
         }
-   },
+    } 
+
 
 
 });
