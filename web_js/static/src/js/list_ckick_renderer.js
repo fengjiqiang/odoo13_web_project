@@ -5,7 +5,6 @@ var ListRenderer = require('web.ListRenderer');
 var FormRender = require('web.FormRenderer');
 
 var controller;
-var last_target_id = null;
 
 FormRender.include({
     _renderView: function () {
@@ -15,23 +14,6 @@ FormRender.include({
 })
 
 ListRenderer.include({
-    /**
-     * 后台数据在前端页面展示
-     * @param {this} param 
-     * @param {点击记录数据表id} resid 
-     */
-    // sel_fun: function (param, resid) {
-    //     // 执行rpc方法，返回后台数据
-    //     this._rpc({
-    //         // 指定执行rpc的model、method，传递的参数
-    //         model: 'training.book',
-    //         method: 'write_rent_record',
-    //         args: [resid],
-    //     }).then(function () {
-    //         // reload方法 在前端页面显示内容
-    //         param.trigger_up('reload');
-    //     });
-    // },
     /**
      * 判断data是否为空
      * 如果为空，返回空字符串
@@ -60,24 +42,6 @@ ListRenderer.include({
                 resid = self.state.data[i].data.id;
             }
         }
-        /**
-         * 点击的模型为'training.book.copy'
-         * 当form处于可编辑状态时
-         * 连续两次相同点击，不走reload方法，明细行可编辑
-         * 否则将当前记录id赋值给last_target_id
-         */
-        // if (self.state.data[0].model === 'training.book.copy') {
-        //     if (controller && controller.mode === 'edit') {
-        //         if (last_target_id !== resid) {
-        //             this.sel_fun(self, resid);
-        //             last_target_id = resid;
-        //         }
-        //     } else {
-        //         this.sel_fun(self, resid);
-        //     }
-        // } else {
-        //     this._super.apply(this, arguments);
-        // }
 
         if (self.state.data[0].model === 'training.book.copy') {
             if ($('.o_field_one2many_new').length === 0) {
@@ -111,7 +75,7 @@ ListRenderer.include({
                 $('.new_table').empty();
                 for (let i = 0; i < res.length; i++) {
                     var data = res[i];
-                    console.log(data);
+                    // console.log(data);
                     $('.new_table').append("<tr>\
                                         <td>"+ data.copy_id[1] + "</td>\
                                         <td>"+ data.book_reference + "</td>\
@@ -126,6 +90,7 @@ ListRenderer.include({
         } else {
             this._super.apply(this, arguments);
         }
+
     } 
 
 
