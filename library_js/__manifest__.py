@@ -11,6 +11,7 @@
     # 菜单放在最后面
     'data': [
         'views/list_template.xml',
+        'data/demo_data.xml',
         'security/ir.model.access.csv',
         'views/book_views.xml',
         'views/book_copy_views.xml',
