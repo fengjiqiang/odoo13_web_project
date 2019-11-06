@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_training_book_copy_tree" model="ir.ui.view">
+        <field name="name">training.book.copy.tree</field>
+        <field name="model">training.book.copy</field>
+        <field name="arch" type="xml">
+            <tree string="" multi_edit="1">
+                <field name="book_id"/>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="book_rented" widget="boolean_toggle"/>
+                <field name="book_location"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_training_book_copy_form" model="ir.ui.view">
+        <field name="name">training.book.copy.form</field>
+        <field name="model">training.book.copy</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="book_id"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="book_location"/>
+                        </group>
+                    </group>
+                    
+                    <field name="book_rent_ids">
+                        <tree string="" editable="top">
+                            <field name="copy_id" domain="[('book_rented', '=', False)]"/>
+                            <field name="book_reference"/>
+                            <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
+                            <field name="rental_date"/>
+                            <field name="return_date" readonly="1"/>
+                            <field name="continue_days" readonly="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_book_copy_add" model="ir.actions.act_window">
+        <field name="name">副本</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">training.book.copy</field>
+        <field name="view_id" ref="view_training_book_copy_tree"/>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>
