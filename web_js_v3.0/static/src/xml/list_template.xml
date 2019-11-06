@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="list_click" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_js/static/src/js/list_ckick_renderer.js"></script>
+        </xpath>
+    </template>
+</odoo>
