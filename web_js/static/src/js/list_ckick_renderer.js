@@ -2,97 +2,98 @@ odoo.define('ListClickRenderer', function (require) {
 "use strict";
 
 var ListRenderer = require('web.ListRenderer');
-var FormRender = require('web.FormRenderer');
+var dialogs = require('web.view_dialogs');
+var dom = require('web.dom');
+var view_registry = require('web.view_registry');
 
-var controller;
 
-FormRender.include({
-    _renderView: function () {
-        controller = this;
-        return this._super.apply(this, arguments);
-    }
-})
+dialogs.FormViewDialog.include({
+    /**
+     * Open the form view dialog.  It is necessarily asynchronous, but this
+     * method returns immediately.
+     *
+     * @returns {FormViewDialog} this instance
+     */
+    open: function () {
+        var self = this;
+        var _super = this._super.bind(this);
+        var FormView = view_registry.get('form');
+        var fields_view_def;
+        if (this.options.fields_view) {
+            fields_view_def = Promise.resolve(this.options.fields_view);
+        } else {
+            fields_view_def = this.loadFieldView(this.res_model, this.context, this.options.view_id, 'form');
+        }
+
+        fields_view_def.then(function (viewInfo) {
+            var refinedContext = _.pick(self.context, function (value, key) {
+                return key.indexOf('_view_ref') === -1;
+            });
+            var formview = new FormView(viewInfo, {
+                modelName: self.res_model,
+                context: refinedContext,
+                ids: self.res_id ? [self.res_id] : [],
+                currentId: self.res_id || undefined,
+                index: 0,
+                mode: self.res_id && self.options.readonly ? 'readonly' : 'edit',
+                footerToButtons: true,
+                default_buttons: false,
+                withControlPanel: false,
+                model: self.model,
+                parentID: self.parentID,
+                recordID: self.recordID,
+            });
+            return formview.getController(self);
+        }).then(function (formView) {
+            self.form_view = formView;
+            var fragment = document.createDocumentFragment();
+            if (self.recordID && self.shouldSaveLocally) {
+                self.model.save(self.recordID, { savePoint: true });
+            }
+            return self.form_view.appendTo(fragment)
+                .then(function () {
+                    self.opened().then(function () {
+                        var $buttons = $('<div>');
+                        self.form_view.renderButtons($buttons);
+                        if ($buttons.children().length) {
+                            self.$footer.empty().append($buttons.contents());
+                        }
+                        dom.append(self.$el, fragment, {
+                            callbacks: [{ widget: self.form_view }],
+                            in_DOM: true,
+                        });
+                    });
+                    // console.log(fragment);
+
+                    if ($('.o_view_controller').length === 1) {
+                        $('.o_form_sheet').append(fragment);
+                    } else {
+                        $('.o_view_controller').last().remove();
+                        $('.o_form_sheet').append(fragment);
+                    }
+                    // return _super();
+                });
+        });
+
+        return this;
+    },
+});
 
 ListRenderer.include({
-    /**
-     * 判断data是否为空
-     * 如果为空，返回空字符串
-     * @param {data} data 
-     */
-    is_false: function (data) {
-        if (!data) {
-            return " ";
-        } else {
-            return data;
-        }
-    },
     /**
      * 多表联动
      * @override
      * @param {MouseEvent} event 
      */
-    _onRowClicked: function (event) {
-        var self = this;
-        var resid;
-        // 获取点击明细行id
-        var id = $(event.currentTarget).data('id');
-        // 获取此明细行的数据表id
-        for (let i = 0; i < self.state.data.length; i++) {
-            if (self.state.data[i].id === id) {
-                resid = self.state.data[i].data.id;
+    _onRowClicked: function (ev) {
+        if (!ev.target.closest('.o_list_record_selector') && !$(ev.target).prop('special_click')) {
+            var id = $(ev.currentTarget).data('id');
+            if (id) {
+                this.trigger_up('open_record', { id: id, target: ev.target });
             }
-        }
-
-        if (self.state.data[0].model === 'training.book.copy') {
-            if ($('.o_field_one2many_new').length === 0) {
-                $('.clearfix').append("<div class='o_field_one2many_new'>\
-                                    <table style='table-layout: fixed;'>\
-                                    <thead>\
-                                    <tr>\
-                                    <th tabindex='-1' style='width: 487px;'><span>书籍</span></th>\
-                                    <th tabindex='-1' style='width: 487px;'><span>编号</span></th>\
-                                    <th tabindex='-1' style='width: 487px;'><span>借阅人</span></th>\
-                                    <th tabindex='-1' style='width: 487px;'><span>借阅时间</span></th>\
-                                    <th tabindex='-1' style='width: 487px;'><span>归还时间</span></th>\
-                                    <th tabindex='-1' style='width: 487px;'><span>持续时间</span></th>\
-                                    </tr>\
-                                    </thead>\
-                                    <tbody class='new_table'>\
-                                    </tbody>\
-                                    </table>\
-                                    </div>");
-            }
-            self._rpc({
-                model: 'book.rent.return',
-                method: 'search_read',
-                args: [],
-                kwargs: {
-                    fields: ['copy_id', 'book_reference', 'customer_id', 'rental_date', 'return_date', 'continue_days'],
-                    domain: [['copy_id', '=', resid]]
-                }
-            }).then(function (res) {
-                // console.log(res);
-                $('.new_table').empty();
-                for (let i = 0; i < res.length; i++) {
-                    var data = res[i];
-                    // console.log(data);
-                    $('.new_table').append("<tr>\
-                                        <td>"+ data.copy_id[1] + "</td>\
-                                        <td>"+ data.book_reference + "</td>\
-                                        <td>"+ data.customer_id[1] + "</td>\
-                                        <td>"+ data.rental_date + "</td>\
-                                        <td>"+ self.is_false(data.return_date) + "</td>\
-                                        <td>"+ self.is_false(data.continue_days) + "</td>\
-                                        </tr>\
-                ")
-                }
-            });
-        } else {
-            this._super.apply(this, arguments);
         }
 
     } 
-
 
 
 });
