@@ -3,7 +3,7 @@
     'name': "图书馆",
     'summary': "web js v3.0",
     'description': "图书馆",
-    'author': "My Company",
+    'author': "Ethan Feng",
     'website': "http://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
