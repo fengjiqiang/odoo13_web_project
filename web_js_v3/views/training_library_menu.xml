@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--一级菜单-->
+    <menuitem name="图书馆"
+              id="menu_root"
+              web_icon="web_js_v3,static/description/icon.png"
+              sequence="0"/>
+    <!--二级菜单-->
+    <menuitem name="书籍"
+              id="menu_book"
+              parent="menu_root"
+              action="action_book_add"
+              sequence="10"/>
+    <menuitem name="借阅"
+              id="menu_book_rent_return"
+              parent="menu_root"
+              action="action_book_rent_return"
+              sequence="20"/>
+    <menuitem name="人员"
+              id="menu_customer"
+              parent="menu_root"
+              action="action_customer_add"
+              sequence="30"/>
+    <!--三级菜单-->
+    <menuitem name="书籍"
+              id="menu_book_book"
+              parent="menu_book"
+              action="action_book_add"
+              sequence="10"/>
+    <menuitem name="副本"
+              id="menu_book_copy"
+              parent="menu_book"
+              action="action_book_copy_add"
+              sequence="20"/>
+
+</odoo>
