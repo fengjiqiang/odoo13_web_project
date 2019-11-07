@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_training_book,training.book,model_training_book,base.group_user,1,1,1,1
-access_training_book_copy,training.book.copy,model_training_book_copy,base.group_user,1,1,1,1
-access_training_customer,training.customer,model_training_customer,base.group_user,1,1,1,1
-access_book_rent_return,book.rent.return,model_book_rent_return,base.group_user,1,1,1,1
