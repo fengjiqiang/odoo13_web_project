@@ -2,21 +2,43 @@ odoo.define('ListClickRenderer', function (require) {
 "use strict";
 
 var ListRenderer = require('web.ListRenderer');
+var FormController = require('web.FormController');
 var dialogs = require('web.view_dialogs');
 var dom = require('web.dom');
 var view_registry = require('web.view_registry');
+var controller;
+var formdialog;
 
+
+FormController.include({
+    /**
+     * 保存数据
+     * @private
+     * @param {MouseEvent} ev
+     */
+    _onSave: function (ev) {
+        ev.stopPropagation(); 
+        formdialog._save();
+        var self = this;
+        this._disableButtons();
+        this.saveRecord().then(this._enableButtons.bind(this)).guardedCatch(this._enableButtons.bind(this));
+    },
+});
 
 dialogs.FormViewDialog.include({
     /**
-     * Open the form view dialog.  It is necessarily asynchronous, but this
-     * method returns immediately.
-     *
+     * 动态联动视窗
+     * 明细行显示在底部
+     * @override
      * @returns {FormViewDialog} this instance
      */
     open: function () {
         var self = this;
         var _super = this._super.bind(this);
+        if (controller.state.data[0].model !== 'training.book.copy' && controller.state.data[0].model !== 'book.rent.return') {
+            return _super();
+        }
+
         var FormView = view_registry.get('form');
         var fields_view_def;
         if (this.options.fields_view) {
@@ -65,27 +87,50 @@ dialogs.FormViewDialog.include({
                     });
                     // console.log(fragment);
 
-                    if ($('.o_view_controller').length === 1) {
-                        $('.o_form_sheet').append(fragment);
-                    } else {
-                        $('.o_view_controller').last().remove();
-                        $('.o_form_sheet').append(fragment);
-                    }
+                    if (controller.state.data[0].model === 'training.book.copy') {
+                        if ($('.o_view_controller').length === 1) {
+                            $('.o_form_sheet').append(fragment);
+                        } else {
+                            $('.o_view_controller').last().remove();
+                            $('.o_form_sheet').append(fragment);
+                        }
+                    } 
+
                     // return _super();
                 });
         });
 
+        formdialog = this;
         return this;
     },
+
+    /**
+     * 保存数据
+     */
+    _save: function () {
+        var self = this;
+        return this.form_view.saveRecord(this.form_view.handle, {
+            stayInEdit: true,
+            reload: false,
+            savePoint: this.shouldSaveLocally,
+            viewType: 'form',
+        }).then(function (changedFields) {
+            var record = self.form_view.model.get(self.form_view.handle);
+            return self.on_saved(record, !!changedFields.length);
+        });
+    },
+
 });
 
 ListRenderer.include({
     /**
-     * 多表联动
+     * 动态联动视窗
      * @override
-     * @param {MouseEvent} event 
+     * @param {MouseEvent} ev 
      */
     _onRowClicked: function (ev) {
+        controller = this;
+
         if (!ev.target.closest('.o_list_record_selector') && !$(ev.target).prop('special_click')) {
             var id = $(ev.currentTarget).data('id');
             if (id) {

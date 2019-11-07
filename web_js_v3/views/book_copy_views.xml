@@ -32,7 +32,7 @@
                     </group>
                     
                     <field name="book_rent_ids">
-                        <tree string="" editable="top">
+                        <tree string="" editable="top" multi_edit="1">
                             <field name="copy_id" domain="[('book_rented', '=', False)]"/>
                             <field name="book_reference"/>
                             <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
