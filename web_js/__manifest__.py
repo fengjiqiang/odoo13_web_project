@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "图书馆",
-    'summary': "library",
+    'summary': "library js",
     'description': "图书馆",
     'author': "My Company",
     'website': "http://www.yourcompany.com",

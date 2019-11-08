@@ -12,14 +12,15 @@ var formviewdialog;
 
 dialogs.FormViewDialog.include({
     /**
-     * Open the form view dialog.  It is necessarily asynchronous, but this
-     * method returns immediately.
-     *
+     * 动态联动视窗
+     * 明细行显示在底部
+     * @override
      * @returns {FormViewDialog} this instance
      */
     open: function () {
         var self = this;
         var _super = this._super.bind(this);
+        // 加入if判断，避免影响其他模块
         if(controller.state.data[0].model !== 'training.book.copy' && controller.state.data[0].model !== 'book.rent.return'){
             return _super();
         }
@@ -42,11 +43,11 @@ dialogs.FormViewDialog.include({
                 currentId: self.res_id || undefined,
                 index: 0,
                 mode: self.res_id && self.options.readonly ? 'readonly' : 'edit',
-                footerToButtons: true,
-                default_buttons: false,
-                withControlPanel: false,
+                // footerToButtons: true,
+                // default_buttons: false,
+                // withControlPanel: false,
                 model: self.model,
-                parentID: self.parentID,
+                // parentID: self.parentID,
                 recordID: self.recordID,
             });
             return formview.getController(self);
@@ -69,20 +70,26 @@ dialogs.FormViewDialog.include({
                             in_DOM: true,
                         });
                     });
-                    if(controller.state.data[0].model == 'training.book.copy'){
-                            if ($('.o_view_controller').length === 1) {
-                                $('.o_form_sheet').append(fragment);
-                            } else {
-                                $('.o_view_controller').last().remove();
-                                $('.o_form_sheet').append(fragment);
-                            }
+
+                    // 明细行显示在tree视图底部
+                    var res = $(fragment).find('.o_list_view');
+                    if(controller.state.data[0].model === 'training.book.copy'){
+                        if ($('.o_list_view').length === 1) {
+                            $('.o_form_sheet').append(res);
+                        } else {
+                            $('.o_list_view').last().remove();
+                            $('.o_form_sheet').append(res);
+                        }
                     }
                 });
         });
-        formviewdialog = this; //formview赋给formviewdialog
+
+        //dialog保存数据
+        formviewdialog = this;
         return this;
     },
      /**
+     * dialog保存数据
      * @private
      * @returns {Promise}
      */
@@ -90,43 +97,31 @@ dialogs.FormViewDialog.include({
         var self = this;
         return this.form_view.saveRecord(this.form_view.handle, {
             stayInEdit: true,
-            reload: false, 
-            savePoint: !this.shouldSaveLocally,
+            reload: true, 
+            // savePoint: !this.shouldSaveLocally,
+            savePoint: false,
             // viewType: 'form',
         }).then(function (changedFields) {
             var record = self.form_view.model.get(self.form_view.handle);
             return self.on_saved(record, !!changedFields.length);
         });
     },
-    
-    create_edit_record: function () {
-        var self = this;
-        var dialog = new FormViewDialog(this, _.extend({}, this.options, {
-            on_saved: function (record) {
-                var values = [{
-                    id: record.res_id,
-                    display_name: record.data.display_name || record.data.name,
-                }];
-                self.on_selected(values);
-            },
-        })).open();
-        dialog.on('closed', this, this.close);
-        return dialog;
-    },
 
     
 });
+
 FormController.include({
 /**
-     * Called when the user wants to save the current record -> @see saveRecord
-     *
+     * form保存数据
      * @private
      * @param {MouseEvent} ev
      */
     _onSave: function (ev) {
-        // formviewdialog._save().then(formviewdialog.close.bind(formviewdialog));
-        formviewdialog._save()
-            .then(formviewdialog.form_view.createRecord.bind(formviewdialog.form_view, formviewdialog.parentID))
+        // 指定模型执行_save()方法
+        var model_list = ["training.book", "training.book.copy", "book.rent.return"]
+        if (model_list.indexOf(controller.state.data[0].model) !== -1) {
+            formviewdialog._save();
+        }
         ev.stopPropagation();
         var self = this;
         this._disableButtons();
@@ -136,18 +131,23 @@ FormController.include({
 
 ListRenderer.include({
     /**
-     * 多表联动
+     * 动态联动视窗
      * @override
-     * @param {MouseEvent} event 
+     * @param {MouseEvent} ev
      */
     _onRowClicked: function (ev) {
-
         controller = this;
-        if (!ev.target.closest('.o_list_record_selector') && !$(ev.target).prop('special_click')) {
-            var id = $(ev.currentTarget).data('id');
-            if (id) {
-                this.trigger_up('open_record', { id: id, target: ev.target });
+
+        // 加入if判断，避免影响其他模块
+        if (controller.state.data[0].model === 'training.book.copy') {
+            if (!ev.target.closest('.o_list_record_selector') && !$(ev.target).prop('special_click')) {
+                var id = $(ev.currentTarget).data('id');
+                if (id) {
+                    this.trigger_up('open_record', { id: id, target: ev.target });
+                }
             }
+        } else {
+            this._super.apply(this, arguments);
         }
     } 
 

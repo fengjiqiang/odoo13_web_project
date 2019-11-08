@@ -28,14 +28,3 @@ class BookCopy(models.Model):
     _sql_constraints = [
         ('reference_unique', 'UNIQUE(reference)', '编号必须唯一')
     ]
-
-    @api.model
-    def write_customer_info(self, resid):
-        # 借阅记录id
-        rent_book_id = self.env['book.rent.return'].search([('id', '=', resid)])
-        # 副本id
-        book_copy_id = rent_book_id.copy_id
-        # 借阅人id
-        cus_id = rent_book_id.customer_id.id
-        # 写入表中
-        book_copy_id.write({'partner_book_ids': [(6, 0, [cus_id])]})

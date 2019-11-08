@@ -22,8 +22,6 @@ class BookSentReturn(models.Model):
         ('owe', '逾期'),
         ('complete', '完成'),
     ], string='状态', copy=False, default='draft')
-    book_rented = fields.Boolean(string="借出", default=False)
-    rent_book_id = fields.Many2one('training.book')
 
 
     def action_confirm(self):
@@ -48,7 +46,3 @@ class BookSentReturn(models.Model):
             self.write({'continue_days': str(current - self.rental_date)})
             self.copy_id.write({'book_rented': False})
     
-    @api.model
-    def search_read(self,domain=None, fields=None, offset=0, limit=None, order=None):
-        res = super(BookSentReturn,self).search_read(domain,fields,offset,limit,order)
-        return res

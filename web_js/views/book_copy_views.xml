@@ -33,7 +33,7 @@
                     
                     <field name="book_rent_ids">
                         <tree string="" editable="top">
-                            <field name="copy_id" domain="[('book_rented', '=', False)]"/>
+                            <field name="copy_id" domain="[('book_rented', '=', False), ('name', '=', parent.name)]"/>
                             <field name="book_reference"/>
                             <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
                             <field name="rental_date"/>
