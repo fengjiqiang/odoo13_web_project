@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <!-- Data to load -->
+    <!-- Customer -->
+    <record model="training.customer" id="customer_1">
+        <field name="name">zhangsan</field>
+        <field name="op_type">partner</field>
+    </record>
+    <record model="training.customer" id="customer_2">
+        <field name="name">liuyi</field>
+        <field name="op_type">partner</field>
+    </record>
+    <record model="training.customer" id="customer_3">
+        <field name="name">qianyi</field>
+        <field name="op_type">partner</field>
+    </record>
+    <record model="training.customer" id="customer_4">
+        <field name="name">liyi</field>
+        <field name="op_type">partner</field>
+    </record>
+    <record model="training.customer" id="customer_5">
+        <field name="name">yitian</field>
+        <field name="op_type">partner</field>
+    </record>
+    <record model="training.customer" id="customer_6">
+        <field name="name">wxb</field>
+        <field name="op_type">author</field>
+    </record>
+    <record model="training.customer" id="customer_7">
+        <field name="name">刘未鹏</field>
+        <field name="op_type">author</field>
+    </record>
+    <record model="training.customer" id="customer_8">
+        <field name="name">Simpson</field>
+        <field name="op_type">author</field>
+    </record>
+    <!-- Book -->
+    <record model="training.book" id="book_1">
+        <field name="name">你不知道的JavaScript（上卷）</field>
+        <field name="author" ref="customer_8"/>
+        <field name="year">2015-4-12</field>
+        <field name="ISBN">9787115385734</field>
+    </record>
+    <record model="training.book" id="book_2">
+        <field name="name">你不知道的JavaScript（中卷）</field>
+        <field name="author" ref="customer_8"/>
+        <field name="year">2016-8-12</field>
+        <field name="ISBN">9787115431165</field>
+    </record>
+    <record model="training.book" id="book_3">
+        <field name="name">你不知道的JavaScript（下卷）</field>
+        <field name="author" ref="customer_8"/>
+        <field name="year">2018-1-1</field>
+        <field name="ISBN">9787115471659</field>
+    </record>
+    <record model="training.book" id="book_4">
+        <field name="name">暗时间</field>
+        <field name="author" ref="customer_7"/>
+        <field name="year">2011-7-12</field>
+        <field name="ISBN">9787121140068</field>
+    </record>
+    <record model="training.book" id="book_5">
+        <field name="name">一只特立独行的猪</field>
+        <field name="author" ref="customer_6"/>
+        <field name="year">2006-4-12</field>
+        <field name="ISBN">9787531719199</field>
+    </record>
+    <!-- Book Copy -->
+    <record model="training.book.copy" id="copy_1">
+        <field name="name">PC#0001</field>
+        <field name="reference">PC#0002</field>
+        <field name="book_id" ref="book_1"/>
+        <field name="book_rented">True</field>
+        <field name="book_location">馆A-1-1</field>
+    </record>
+    <record model="training.book.copy" id="copy_2">
+        <field name="name">PC#0003</field>
+        <field name="reference">PC#0004</field>
+        <field name="book_id" ref="book_1"/>
+        <field name="book_rented">True</field>
+        <field name="book_location">馆A-1-1</field>
+    </record>
+    <record model="training.book.copy" id="copy_3">
+        <field name="name">PC#0005</field>
+        <field name="reference">PC#0006</field>
+        <field name="book_id" ref="book_4"/>
+        <field name="book_rented">True</field>
+        <field name="book_location">馆A-1-2</field>
+    </record>
+    <record model="training.book.copy" id="copy_4">
+        <field name="name">PC#0007</field>
+        <field name="reference">PC#0008</field>
+        <field name="book_id" ref="book_4"/>
+        <field name="book_rented">True</field>
+        <field name="book_location">馆A-1-2</field>
+    </record>
+    <record model="training.book.copy" id="copy_5">
+        <field name="name">PC#0009</field>
+        <field name="reference">PC#0010</field>
+        <field name="book_id" ref="book_1"/>
+        <field name="book_rented">True</field>
+        <field name="book_location">馆A-1-1</field>
+    </record>
+    <record model="training.book.copy" id="copy_6">
+        <field name="name">PC#0011</field>
+        <field name="reference">PC#0012</field>
+        <field name="book_id" ref="book_5"/>
+        <field name="book_location">馆A-1-3</field>
+    </record>
+    <!-- Rent -->
+    <record model="book.rent.return" id="rent_1">
+        <field name="copy_id" ref="copy_1"/>
+        <field name="customer_id" ref="customer_1"/>
+        <field name="state">confirm</field>
+    </record>
+    <record model="book.rent.return" id="rent_2">
+        <field name="copy_id" ref="copy_2"/>
+        <field name="customer_id" ref="customer_2"/>
+        <field name="state">confirm</field>
+    </record>
+    <record model="book.rent.return" id="rent_3">
+        <field name="copy_id" ref="copy_3"/>
+        <field name="customer_id" ref="customer_3"/>
+        <field name="state">confirm</field>
+    </record>
+    <record model="book.rent.return" id="rent_4">
+        <field name="copy_id" ref="copy_4"/>
+        <field name="customer_id" ref="customer_1"/>
+        <field name="state">confirm</field>
+    </record>
+    <record model="book.rent.return" id="rent_5">
+        <field name="copy_id" ref="copy_5"/>
+        <field name="customer_id" ref="customer_2"/>
+        <field name="state">confirm</field>
+    </record>
+    <record model="book.rent.return" id="rent_6">
+        <field name="copy_id" ref="copy_6"/>
+        <field name="customer_id" ref="customer_2"/>
+        <field name="state">confirm</field>
+    </record>
+    
+</odoo>

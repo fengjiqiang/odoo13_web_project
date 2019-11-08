@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_training_book_tree" model="ir.ui.view">
+        <field name="name">training.book.tree</field>
+        <field name="model">training.book</field>
+        <field name="arch" type="xml">
+            <tree string="" multi_edit="1">
+                <field name="name"/>
+                <field name="author"/>
+                <field name="year"/>
+                <field name="ISBN"/>
+                <field name="book_copy_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_training_book_form" model="ir.ui.view">
+        <field name="name">training.book.form</field>
+        <field name="model">training.book</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="author" domain="[('op_type', '=', 'author')]"/>
+                        </group>
+                        <group>
+                            <field name="year"/>
+                            <field name="ISBN"/>
+                        </group>
+                    </group>
+
+                    <field name="book_copy_ids">
+                        <tree string="" editable="top" multi_edit="1">
+                            <field name="book_id" domain="[('name', '=', parent.name)]"/>
+                            <field name="name"/>
+                            <field name="reference"/>
+                            <field name="book_location"/>
+                            <!-- <field name="book_rent_ids" widget="many2many_tags"/> -->
+                        </tree>
+                    </field>
+                    
+                    <!-- <field name="rent_ids">
+                        <tree string="" editable="top">
+                            <field name="copy_id" domain="[('book_rented', '=', False)]"/>
+                            <field name="book_reference"/>
+                            <field name="customer_id" domain="[('op_type', '=', 'partner')]"/>
+                            <field name="rental_date"/>
+                            <field name="return_date" readonly="1"/>
+                            <field name="continue_days" readonly="1"/>
+                        </tree>
+                    </field> -->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_book_add" model="ir.actions.act_window">
+        <field name="name">书籍</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">training.book</field>
+        <field name="view_id" ref="view_training_book_tree"/>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>
