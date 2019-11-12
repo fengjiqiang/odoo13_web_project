@@ -119,8 +119,10 @@ FormController.include({
     _onSave: function (ev) {
         // 指定模型执行_save()方法
         var model_list = ["training.book", "training.book.copy", "book.rent.return"]
-        if (model_list.indexOf(controller.state.data[0].model) !== -1) {
-            formviewdialog._save();
+        if (controller) {
+            if (model_list.indexOf(controller.state.data[0].model) !== -1) {
+                formviewdialog._save();
+            }
         }
         ev.stopPropagation();
         var self = this;
