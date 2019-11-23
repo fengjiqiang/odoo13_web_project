@@ -3,7 +3,7 @@
     <record id="seq_book_copy_reference" model="ir.sequence">
         <field name="name">Book Copy Reference</field>
         <field name="code">training.book.copy</field>
-        <field name="prefix">TJS#</field>
+        <field name="prefix">TJS%(range_year)s%(range_month)s%(range_day)s</field>
         <field name="padding">4</field>
     </record>
 </odoo>
